@@ -2,6 +2,7 @@
 #
 # Where the magic happens
 require 'sinatra'
+require 'json'
 
 puts "\n#{Process.pid} is my PID"
 
@@ -22,7 +23,7 @@ end
 get '/status' do
   # TODO: this
   {
-      :this_thing => 'needs to be done'
+      :status => false
   }.to_json
 end
 
