@@ -1,5 +1,7 @@
 require 'data_mapper'
 
+# TODO: Should this be shipped out to its own separate gem?
+
 class MinecraftUser
   include DataMapper::Resource
 
@@ -8,4 +10,8 @@ class MinecraftUser
   property :hashword, String # TODO: Figure this one out
   property :salt, String # TODO: Figure this one out as well
   property :email_address, String, :required => true
+
+  # TODO: This
+  def generate_hashword(password)
+  end
 end
