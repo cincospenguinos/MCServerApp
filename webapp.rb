@@ -6,6 +6,7 @@ require 'sinatra'
 puts "\n#{Process.pid} is my PID"
 
 get '/' do
+  @js_files = ['startup.min.js']
   erb :index
 end
 
