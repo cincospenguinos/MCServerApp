@@ -8,6 +8,9 @@
   <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
   <link rel="stylesheet" href="css/header_stylesheet.min.css"/>
   <link rel="stylesheet" href="css/footer_stylesheet.min.css"/>
+  <% @css_files.each do |file| %>
+    <link rel="stylesheet" href="css/<%=file%>"/>
+  <% end %>
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
       <div class="navbar-header">
@@ -18,19 +21,26 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Start the Server</a>
+        <% if @server_on %>
+          <a class="navbar-brand" href="#">Andre's Minecraft Server</a>
+        <% else %>
+          <a class="navbar-brand" href="#">Start the Server</a>
+        <% end %>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <!-- TODO: Check to see if the server is running. If so, then don't show this -->
-        <form class="navbar-form navbar-right">
-          <div class="form-group">
-            <input type="text" placeholder="Username" id="send-startup-username" class="form-control">
-          </div>
-          <div class="form-group">
-            <input type="password" placeholder="Password" id="send-startup-password" class="form-control">
-          </div>
-          <button type="button" id="send-startup-button" class="btn btn-success">Start</button>
-        </form>
+        <% if @server_on %>
+          <!-- TODO: Figure out what to show here that isn't intrusive but shows that the server is on -->
+        <% else %>
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Username" id="send-startup-username" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" id="send-startup-password" class="form-control">
+            </div>
+            <button type="button" id="send-startup-button" class="btn btn-success">Start</button>
+          </form>
+        <% end %>
       </div>
     </div>
   </nav>

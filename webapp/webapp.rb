@@ -3,8 +3,22 @@ require 'json'
 
 require 'minecraft_user'
 
-get '/' do
+helpers do
+  def server_on?
+    return !`/etc/init.d/minecraft status`.match(/not/) if File.exist?('/etc/init.d/minecraft')
+    false
+  end
+end
+
+before %r((^\/$|map|stats)) do
   @js_files = []
+  @css_files = []
+  @server_on = server_on?
+end
+
+get '/' do
+  @server_on = server_on?
+  @css_files = ['index_stylesheet.min.css']
   erb :index
 end
 
@@ -18,15 +32,9 @@ end
 
 # Returns the status of the server
 get '/status' do
-  if File.exist?('/etc/init.d/minecraft')
-    {
-      :status =>  !`/etc/init.d/minecraft status`.match(/not/)
-    }.to_json
-  else
-    {
-      :status => false
-    }.to_json
-  end
+  {
+    :status =>  server_on?
+  }.to_json
 end
 
 # Starts up the server given the correct username/password

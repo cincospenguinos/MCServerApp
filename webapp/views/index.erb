@@ -3,21 +3,77 @@
   <div class="container">
     <h1>Andre's Minecraft Server</h1>
     <p>This is Andre's Minecraft Server. You can startup the server by using the panel above, or request access
-    to the server <a href="#">here</a>.</p>
+    to the server <a href="#request-access-space">here</a>.</p>
   </div>
 </div>
-<!-- TODO: A nice carousel of images from our server -->
 <div class="container">
+  <div class="row">
+    <div id="minecraft-screenshots-carousel" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="1"></li>
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="2"></li>
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="3"></li>
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="4"></li>
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="5"></li>
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="6"></li>
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="7"></li>
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="8"></li>
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="9"></li>
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="10"></li>
+        <li data-target="#minecraft-screenshots-carousel" data-slide-to="11"></li>
+      </ol>
+
+      <div class="carousel-inner" role="listbox">
+        <div class="item active">
+          <img src="images/0.png" width="100%"/>
+        </div>
+        <div class="item">
+          <img src="images/1.png" width="100%"/>
+        </div>
+        <div class="item">
+          <img src="images/2.png" width="100%"/>
+        </div>
+        <div class="item">
+          <img src="images/3.png" width="100%"/>
+        </div>
+        <div class="item">
+          <img src="images/4.png" width="100%"/>
+        </div>
+        <div class="item">
+          <img src="images/5.png" width="100%"/>
+        </div>
+        <div class="item">
+          <img src="images/6.png" width="100%"/>
+        </div>
+        <div class="item">
+          <img src="images/7.png" width="100%"/>
+        </div>
+        <div class="item">
+          <img src="images/8.png" width="100%"/>
+        </div>
+        <div class="item">
+          <img src="images/9.png" width="100%"/>
+        </div>
+        <div class="item">
+          <img src="images/10.png" width="100%"/>
+        </div>
+        <div class="item">
+          <img src="images/11.png" width="100%"/>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-4">
       <h2>Map</h2>
       <p>We have a map of our server showing off the cool stuff.</p>
-      <p><a class="btn btn-default" href="#" role="button">View map &raquo;</a></p>
+      <p><a class="btn btn-default" href="map" role="button">View map &raquo;</a></p>
     </div>
     <div class="col-md-4">
       <h2>Generic Stats</h2>
       <p>See the stats of the various members of our server.</p>
-      <p><a class="btn btn-default" href="#" role="button">View stats &raquo;</a></p>
+      <p><a class="btn btn-default" href="stats" role="button">View stats &raquo;</a></p>
     </div>
     <div class="col-md-4">
       <h2>Code</h2>
@@ -25,4 +81,11 @@
       <p><a class="btn btn-default" href="https://github.com/cincospenguinos/MCServerApp" role="button">View code &raquo;</a></p>
     </div>
   </div>
+  <div class="row" id="request-access-space">
+    <div class="col-lg-12">
+      <h2>Request Access</h2>
+      <p>Want to play on Andre's server? Request access here!</p>
+    </div>
+  </div>
+</div>
 <%= erb :footer_file %>
