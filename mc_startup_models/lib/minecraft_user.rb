@@ -3,13 +3,11 @@ require 'data_mapper'
 
 require_relative 'startup_request'
 
-# TODO: Should this be shipped out to its own separate gem?
-
 class MinecraftUser
   include DataMapper::Resource, BCrypt
 
   property :id, Serial
-  property :username, String, :required => true
+  property :username, String, :required => true, :unique => true
   property :password, String, :required => true # Actually a hashword, but whatever
   property :email_address, String, :required => true, :format => :email_address
 
