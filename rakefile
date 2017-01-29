@@ -1,0 +1,43 @@
+require 'rake'
+require 'fileutils'
+require 'yaml'
+
+task :setup do
+  FileUtils.makedirs('config') unless File.directory?('config')
+  Dir.chdir('config') do
+
+    # Setup db_config
+    unless File.exist?('db_config.yml')
+      db_config = {
+          production: {
+              db_username: '',
+              db_password: '',
+              db_hostname: '',
+              db_engine: ''
+          },
+          development: {
+              db_username: '',
+              db_password: '',
+              db_hostname: '',
+              db_engine: ''
+          },
+          test: {
+              db_username: '',
+              db_password: '',
+              db_hostname: '',
+              db_engine: ''
+          }
+      }.to_yaml
+      File.open('db_config.yml', 'w') {|f| f.write(db_config) }
+      puts 'Please modify the db_config.yml file'
+      exit 1
+    end
+
+    # Now let's get the proper adapter put together
+  end
+end
+
+# TODO: What should this be?
+task :default do
+
+end

@@ -4,8 +4,6 @@
 require 'sinatra'
 require 'json'
 
-puts "\n#{Process.pid} is my PID"
-
 get '/' do
   @js_files = ['startup.min.js']
   erb :index
