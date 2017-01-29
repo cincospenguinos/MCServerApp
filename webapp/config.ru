@@ -10,6 +10,10 @@ db_config = db_config[:development] if settings.environment == :development
 db_config = db_config[:test] if settings.environment == :test
 db_config = db_config[:production] if settings.environment == :production
 
+# Install and require the proper dm adapter
+`gem install dm-#{db_config[:db_engine]}-adapter`
+require "dm-#{db_config[:db_engine]}-adapter"
+
 # Get DataMapper setup
 DataMapper::Logger.new($stdout, :debug) if settings.environment == :development
 DataMapper.setup(:default, "#{db_config[:db_engine]}://#{db_config[:db_username]}" +

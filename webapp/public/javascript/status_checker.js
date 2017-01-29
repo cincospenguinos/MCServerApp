@@ -17,6 +17,7 @@ function is_server_on(){
 }
 
 var status_element = $('#server-status');
+var interval = 5000;
 setInterval(function(){
     if(is_server_on()){
         console.log('Server is on');
@@ -25,4 +26,6 @@ setInterval(function(){
         console.log('Server is off');
         status_element.attr('class', 'server-status-off');
     }
-}, 5000);
+
+    interval += 5000;
+}, interval);

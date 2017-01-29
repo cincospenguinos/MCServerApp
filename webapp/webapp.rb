@@ -4,7 +4,7 @@ require 'json'
 require 'minecraft_user'
 
 get '/' do
-  @js_files = ['startup.min.js']
+  @js_files = []
   erb :index
 end
 

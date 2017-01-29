@@ -43,7 +43,9 @@ task :setup do
       exit 1
     end
 
-    # Now let's get the proper adapter put together
+    # TODO:
+
+    # TODO: DB Adapter?
   end
 end
 

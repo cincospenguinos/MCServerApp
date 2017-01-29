@@ -6,6 +6,7 @@
   <!-- We're using bootstrap because I'm lazy -->
   <link rel="stylesheet" href="css/bootstrap.min.css"/>
   <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+  <link rel="stylesheet" href="css/header_stylesheet.min.css"/>
   <link rel="stylesheet" href="css/footer_stylesheet.min.css"/>
   <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
@@ -23,15 +24,15 @@
         <!-- TODO: Check to see if the server is running. If so, then don't show this -->
         <form class="navbar-form navbar-right">
           <div class="form-group">
-            <input type="text" placeholder="username" class="form-control">
+            <input type="text" placeholder="Username" id="send-startup-username" class="form-control">
           </div>
           <div class="form-group">
-            <input type="password" placeholder="password" class="form-control">
+            <input type="password" placeholder="Password" id="send-startup-password" class="form-control">
           </div>
-          <!-- TODO: Figure this one out - just send a post request? -->
-          <button type="button" class="btn btn-success">Start</button>
+          <button type="button" id="send-startup-button" class="btn btn-success">Start</button>
         </form>
       </div>
     </div>
-    <!-- TODO: Indicate whether or not the request worked space -->
   </nav>
+  <body>
+    <div class="container" id="startup-request-alert-space"></div>
