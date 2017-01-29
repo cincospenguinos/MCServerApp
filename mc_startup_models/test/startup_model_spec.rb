@@ -22,10 +22,6 @@ describe 'MC Startup Models' do
     DataMapper.auto_migrate!
   end
 
-  before :each do
-
-  end
-
   after :each do
     StartupRequest.destroy!
     MinecraftUser.destroy!

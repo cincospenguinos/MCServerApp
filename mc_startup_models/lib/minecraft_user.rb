@@ -29,8 +29,4 @@ class MinecraftUser
       false
     end
   end
-
-  def has_hashword
-    password.nil?
-  end
 end

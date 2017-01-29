@@ -13,6 +13,7 @@ class StartupRequest
   def self.minutes_elapsed
     now = DateTime.now
     past = StartupRequest.last.date_received
+    return 0 unless past
     (now - past).to_i.abs / 60
   end
 end
