@@ -2,6 +2,13 @@ require 'rake'
 require 'fileutils'
 require 'yaml'
 
+require 'rake/testtask'
+
+# TODO: Testing
+# Rake::TestTask.new do |t|
+#   t.libs << 'test'
+# end
+
 task :setup do
   FileUtils.makedirs('config') unless File.directory?('config')
   Dir.chdir('config') do
@@ -10,18 +17,21 @@ task :setup do
     unless File.exist?('db_config.yml')
       db_config = {
           production: {
+              db_schema_name: '',
               db_username: '',
               db_password: '',
               db_hostname: '',
               db_engine: ''
           },
           development: {
+              db_schema_name: '',
               db_username: '',
               db_password: '',
               db_hostname: '',
               db_engine: ''
           },
           test: {
+              db_schema_name: '',
               db_username: '',
               db_password: '',
               db_hostname: '',
