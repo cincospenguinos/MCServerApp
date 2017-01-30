@@ -73,7 +73,7 @@ class WebApp < Sinatra::Base
 
     return { :successful => false, message: 'Username and password may not be empty'}.to_json if username.empty? || password.empty? || email_address.empty?
 
-    MinecraftUser.first_or_create(:username => username, :password => password, :email_address => email_address)
+    user = MinecraftUser.first_or_create(:username => username, :password => password, :email_address => email_address)
 
     {
         :successful => true,
