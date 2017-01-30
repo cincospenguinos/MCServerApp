@@ -43,13 +43,22 @@ task :setup do
       exit 1
     end
 
-    # TODO:
-
-    # TODO: DB Adapter?
+    # Setup the startup script config
+    unless File.exist?('startup_script_config.yml')
+      startup_config = {
+          full_file_path: '',
+          status: 'status',
+          start: 'start',
+          stop: 'stop'
+      }.to_yaml
+      File.open('startup_script_config.yml', 'w') { |f| f.write(startup_config)}
+      puts 'Please modify the startup_script_config.yml file'
+      exit 1
+    end
   end
 end
 
 # TODO: What should this be?
-task :default do
+task :default => [:setup] do
 
 end

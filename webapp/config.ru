@@ -1,3 +1,4 @@
+require 'sinatra/base'
 require 'data_mapper'
 require_relative 'webapp'
 
@@ -21,4 +22,4 @@ DataMapper.setup(:default, "#{db_config[:db_engine]}://#{db_config[:db_username]
                      "/#{db_config[:db_schema_name]}")
 DataMapper.auto_upgrade!
 
-run Sinatra::Application
+run WebApp
