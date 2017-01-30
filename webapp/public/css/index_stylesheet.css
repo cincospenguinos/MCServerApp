@@ -1,1 +1,3 @@
 .carousel-indicators li { visibility: hidden; }
+.container-padding { padding-top: 15px; padding-bottom: 15px; }
+#access-request-alert-space { padding-top: 30px; }

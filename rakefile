@@ -11,6 +11,8 @@ require 'rake/testtask'
 
 task :setup do
   FileUtils.makedirs('config') unless File.directory?('config')
+  config_flag = false
+
   Dir.chdir('config') do
 
     # Setup db_config
@@ -40,7 +42,7 @@ task :setup do
       }.to_yaml
       File.open('db_config.yml', 'w') {|f| f.write(db_config) }
       puts 'Please modify the db_config.yml file'
-      exit 1
+      config_flag = true
     end
 
     # Setup the startup script config
@@ -53,9 +55,22 @@ task :setup do
       }.to_yaml
       File.open('startup_script_config.yml', 'w') { |f| f.write(startup_config)}
       puts 'Please modify the startup_script_config.yml file'
-      exit 1
+      config_flag = true
+    end
+
+    unless File.exist?('email_config.yml')
+      email_config = {
+          email_address: '',
+          password: '',
+          admin_email_address: ''
+      }.to_yaml
+      File.open('email_config.yml', 'w') { |f| f.write(email_config) }
+      puts 'Please modify email_config.yml'
+      config_flag = true
     end
   end
+
+  exit 1 if config_flag
 end
 
 # TODO: What should this be?

@@ -34,6 +34,7 @@ describe 'MC Startup Models' do
 
   it 'should create a startup request given a correct password' do
     user = MinecraftUser.create!(:username => 'Joe Cool', :email_address => 'joe_cool@cool.com', :password => 'secret')
+    user.allow_startup
     expect(user.startup?('secret')).to be_truthy
     expect(StartupRequest.first).to be_truthy
   end
@@ -41,6 +42,12 @@ describe 'MC Startup Models' do
   it 'should not create a startup request given an incorrect password' do
     user = MinecraftUser.create!(:username => 'Joe Cool', :email_address => 'joe_cool@cool.com', :password => 'secret')
     expect(user.startup?('not_secret')).to be_falsey
+    expect(StartupRequest.first).to be_falsey
+  end
+
+  it 'should not let a user startup if the user is not allowed to' do
+    user = MinecraftUser.create!(:username => 'Joe Cool', :email_address => 'joe_cool@cool.com', :password => 'secret')
+    expect(user.startup?('secret')).to be_falsey
     expect(StartupRequest.first).to be_falsey
   end
 end

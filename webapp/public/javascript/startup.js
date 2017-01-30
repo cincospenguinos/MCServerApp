@@ -54,12 +54,13 @@ function sendStartupRequest(){
 
             if(resp.successful){
                 showStartupRequestMessage(true, 'The server will startup shortly');
+                $('#send-startup-username').val('');
+                $('#send-startup-password').val('');
             } else {
                 showStartupRequestMessage(false, resp.message);
             }
         },
-        failure: function(){
-            // TODO: This
+        error: function(){
             showStartupRequestMessage(false, 'There was a server side error. Please let Andre know.');
         }
     });
@@ -70,5 +71,5 @@ $('#send-startup-button').click(function(){
     if(validateStartupRequest())
         sendStartupRequest();
     else
-        showStartupRequestMessage(false, 'Username and password are required'); // TODO: This
+        showStartupRequestMessage(false, 'Username and password are required');
 });

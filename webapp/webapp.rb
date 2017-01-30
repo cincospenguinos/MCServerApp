@@ -21,6 +21,7 @@ class WebApp < Sinatra::Base
 
   get '/' do
     @css_files << 'index_stylesheet.min.css'
+    @js_files << 'access_request.min.js'
     erb :index
   end
 
@@ -44,6 +45,8 @@ class WebApp < Sinatra::Base
     username = params['username']
     password = params['password']
 
+    { :successful => false, message: 'Username and password may not be empty'}.to_json if username.empty? || password.empty?
+
     user = MinecraftUser.first(:username => username)
 
     if user && user.startup?(password)
@@ -58,6 +61,23 @@ class WebApp < Sinatra::Base
     {
       :successful => false,
       :message => 'Username/password incorrect'
+    }.to_json
+  end
+
+  # Submit a request to access the server
+  post '/access' do
+    # TODO: Send a notification in a new thread
+    username = params['username'].to_s
+    password = params['password'].to_s
+    email_address = params['email_address'].to_s
+
+    return { :successful => false, message: 'Username and password may not be empty'}.to_json if username.empty? || password.empty? || email_address.empty?
+
+    MinecraftUser.first_or_create(:username => username, :password => password, :email_address => email_address)
+
+    {
+        :successful => true,
+        :message => ''
     }.to_json
   end
 end

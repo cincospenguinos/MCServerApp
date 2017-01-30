@@ -6,7 +6,7 @@
     to the server <a href="#request-access-space">here</a>.</p>
   </div>
 </div>
-<div class="container">
+<div class="container container-padding">
   <div class="row">
     <div id="minecraft-screenshots-carousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
@@ -64,6 +64,8 @@
       </div>
     </div>
   </div>
+</div>
+<div class="container container-padding">
   <div class="row">
     <div class="col-md-4">
       <h2>Map</h2>
@@ -77,14 +79,35 @@
     </div>
     <div class="col-md-4">
       <h2>Code</h2>
-      <p>All of the source code for my website is open! View it on Github.</p>
+      <p>View all of my code on GitHub</p>
       <p><a class="btn btn-default" href="https://github.com/cincospenguinos/MCServerApp" role="button">View code &raquo;</a></p>
     </div>
   </div>
+</div>
+<div class="container container-padding">
   <div class="row" id="request-access-space">
-    <div class="col-lg-12">
+    <div class="col-md-8">
       <h2>Request Access</h2>
       <p>Want to play on Andre's server? Request access here!</p>
+    </div>
+    <div class="col-md-4">
+      <form>
+        <div class="form-group">
+          <input type="text" placeholder="Username" id="access-request-username" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Password" id="access-request-password" class="form-control">
+        </div>
+        <div class="form-group">
+          <input type="text" placeholder="Email" id="access-request-email" class="form-control">
+        </div>
+        <button type="button" id="submit-access-request" class="btn btn-success">Send Request</button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12" id="access-request-alert-space">
+
     </div>
   </div>
 </div>
