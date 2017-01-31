@@ -41,14 +41,34 @@ class MCEmailer
     send_email("Access Request for #{@html.encode  username}", @@config[:admin_email_address], body)
   end
 
-  # TODO: This
+  # Notify that someone has been accepted
   def notify_accepted(username, email_address)
+    html = <<-HTML_TOKEN
+      <h1>#{@html.encode username},</h1>
 
+      <p>You have been accepted to join Andre's server! Go ahead and connect using andreminecraft.duckdns.org.
+      Let Andre know if you have any questions.</p>
+      <h3>- Andre's MC Admin Bot</h3>
+      <p style="font-size: xx-small;">I am a bot! I will not respond to any emails you send me! If you would
+      like to see Andre's code, check it out on Github <a href="https://github.com/cincospenguinos/MCServerApp">here</a>.</p>
+    HTML_TOKEN
+
+    send_email("Congrats #{@html.encode username}!", email_address, html)
   end
 
-  # TODO: This
+  # Notify that someone has been rejected
   def notify_rejected(username, email_address)
+    html = <<-HTML_TOKEN
+      <h1>#{@html.encode username},</h1>
 
+      <p>I regret to inform you that you have been denied access to Andre's server. This may change in the future; ask
+      Andre for details.</p>
+      <h3>- Andre's MC Admin Bot</h3>
+      <p style="font-size: xx-small;">I am a bot! I will not respond to any emails you send me! If you would
+      like to see Andre's code, check it out on Github <a href="https://github.com/cincospenguinos/MCServerApp">here</a>.</p>
+    HTML_TOKEN
+
+    send_email("Access for #{@html.encode username}", email_address, html)
   end
 
   private

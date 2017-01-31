@@ -3,6 +3,7 @@ require 'json'
 require 'yaml'
 
 require 'minecraft_user'
+require 'mc_emailer'
 
 class WebApp < Sinatra::Base
 
@@ -66,14 +67,17 @@ class WebApp < Sinatra::Base
 
   # Submit a request to access the server
   post '/access' do
-    # TODO: Send a notification in a new thread
     username = params['username'].to_s
     password = params['password'].to_s
     email_address = params['email_address'].to_s
 
     return { :successful => false, message: 'Username and password may not be empty'}.to_json if username.empty? || password.empty? || email_address.empty?
 
-    user = MinecraftUser.first_or_create(:username => username, :password => password, :email_address => email_address)
+    Thread.new {
+      user = MinecraftUser.first_or_create(:username => username, :password => password, :email_address => email_address)
+      emailer = MCEmailer.new('config/email_config.yml')
+      emailer.notify_request(user.username, user.email_address)
+    }
 
     {
         :successful => true,
