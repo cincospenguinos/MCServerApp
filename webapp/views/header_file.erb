@@ -28,9 +28,7 @@
         <% end %>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
-        <% if @server_on %>
-          <!-- TODO: Figure out what to show here that isn't intrusive but shows that the server is on -->
-        <% else %>
+        <% unless @server_on %>
           <form class="navbar-form navbar-right">
             <div class="form-group">
               <input type="text" placeholder="Username" id="send-startup-username" class="form-control">

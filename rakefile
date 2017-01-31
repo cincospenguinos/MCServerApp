@@ -2,13 +2,6 @@ require 'rake'
 require 'fileutils'
 require 'yaml'
 
-require 'rake/testtask'
-
-# TODO: Testing
-# Rake::TestTask.new do |t|
-#   t.libs << 'test'
-# end
-
 task :setup do
   FileUtils.makedirs('config') unless File.directory?('config')
   config_flag = false
@@ -71,9 +64,8 @@ task :setup do
   end
 
   exit 1 if config_flag
+
+  # TODO: And now we need to throw all the code around
 end
 
-# TODO: What should this be?
-task :default => [:setup] do
-
-end
+task :default => [:setup]

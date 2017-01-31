@@ -32,8 +32,7 @@ class MCEmailer
         <h1>Andre,</h1>
 
         <p>#{@html.encode username} has requested access to your server. His/her email address
-        is #{@html.encode email_address}. Go ahead and email me back with either "YES #{@html.encode  username}"
-        or "NO #{@html.encode  username}" to handle this request.</p>
+        is #{@html.encode email_address}.</p>
 
         <h3>- Your MC Admin Bot</h3>
     BODY_TOKEN

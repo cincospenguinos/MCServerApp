@@ -10,7 +10,7 @@ class MinecraftUser
   property :username, String, :required => true, :unique => true
   property :password, String, :required => true # Actually a hashword, but whatever
   property :email_address, String, :required => true, :format => :email_address
-  property :can_startup?, Boolean, :default => false
+  property :can_startup, Boolean, :default => false
 
   has n, :startup_requests
 
@@ -26,7 +26,7 @@ class MinecraftUser
   # Verifies whether or not the provided password is correct and creates
   #  a StartupRequest if it is
   def startup?(provided_pass)
-    if can_startup? && provided_pass == password
+    if can_startup && provided_pass == password
       request = StartupRequest.create!(:minecraft_user => self)
       request
     else
