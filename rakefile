@@ -65,7 +65,36 @@ task :setup do
 
   exit 1 if config_flag
 
-  # TODO: And now we need to throw all the code around
+  `sudo gem install bundler && bundler install`
+
+  # Make sure we get the proper DB Engine
+  db_config = YAML.load_file('config/db_config.yml')[:production]
+  `gem install dm-#{db_config[:db_engine]}-adapter`
+
+  # Let's build all the various gems and install them
+  Dir.chdir('mc_emailer') do
+    `gem build mc_emailer.gemspec`
+    `sudo gem install mc_emailer-0.0.1.gem && rm mc_emailer-0.0.1.gem`
+  end
+
+  Dir.chdir('mc_startup_models') do
+    `gem build mc_startup_models.gemspec`
+    `sudo gem install mc_startup_models-0.0.1.gem && mc_startup_models-0.0.1.gem`
+  end
+
+  # Put the config files in the webapp space
+  `cp -R config webapp/`
+
+  # Make a copy of config locally as well
+  `cp -R config ~/`
+
+  # Put everything in backend_scripts into ~/bin
+  `cp -R backend_scripts `
+
+  # Move the startup script over to services
+  `sudo mv ~/bin/minecraft /etc/init.d/`
+
+  # TODO: Now deploy the web app where it needs to go
 end
 
 task :default => [:setup]

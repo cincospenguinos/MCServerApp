@@ -3,7 +3,6 @@ require 'data_mapper'
 require_relative 'webapp'
 
 # Grab the configuration directory
-`cp -R ../config .` unless File.directory?('config')
 db_config = nil
 Dir.chdir('config') { db_config = YAML.load_file('db_config.yml') }
 
@@ -12,7 +11,6 @@ db_config = db_config[:test] if settings.environment == :test
 db_config = db_config[:production] if settings.environment == :production
 
 # Install and require the proper dm adapter
-`gem install dm-#{db_config[:db_engine]}-adapter`
 require "dm-#{db_config[:db_engine]}-adapter"
 
 # Get DataMapper setup
