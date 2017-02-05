@@ -3,6 +3,8 @@ require 'data_mapper'
 
 require_relative 'startup_request'
 
+# TODO: This stores plaintext user passwords! Fix it!
+
 class MinecraftUser
   include DataMapper::Resource, BCrypt
 
