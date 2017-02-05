@@ -1,6 +1,9 @@
 require 'sinatra/base'
 require 'data_mapper'
-require_relative 'webapp'
+#require_relative 'webapp'
+
+require File.expand_path '../webapp.rb', __FILE__
+#require File.join(File.dirname(__FILE__), '../webapp')
 
 # Grab the configuration directory
 db_config = nil
