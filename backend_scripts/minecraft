@@ -13,7 +13,7 @@
  # Short-Description:    Minecraft server
  # Description:    Starts the minecraft server
  ### END INIT INFO
-
+ 
  #Settings
  SERVICE='minecraft_server.jar'
  OPTIONS='nogui'
@@ -21,22 +21,13 @@
  WORLD='apocrypha'
  MCPATH='/home/minecraft/server'
  BACKUPPATH="$MCPATH/backups"
- MAXHEAP=512
+ MAXHEAP=1024
  MINHEAP=512
  HISTORY=256
  CPU_COUNT=1
  INVOCATION="java -Xmx${MAXHEAP}M -Xms${MINHEAP}M -XX:+UseConcMarkSweepGC \
  -XX:+CMSIncrementalPacing -XX:ParallelGCThreads=$CPU_COUNT -XX:+AggressiveOpts \
- -jar $SERVICE $OPTIONS"
-
- ME=`whoami`
- as_user() {
-   if [ "$ME" = "$USERNAME" ] ; then
-     bash -c "$1"
-   else
-     su - "$USERNAME" -c "$1"
-   fi
- }
+ -jar $SERVICE $OPTIONS" 
 
  mc_start() {
    if  pgrep -u $USERNAME -f $SERVICE > /dev/null
@@ -45,7 +36,7 @@
    else
      echo "Starting $SERVICE..."
      cd $MCPATH
-     as_user "cd $MCPATH && screen -h $HISTORY -dmS minecraft $INVOCATION"
+     sudo -u $USERNAME screen -h $HISTORY -dmS minecraft $INVOCATION
      sleep 7
      if pgrep -u $USERNAME -f $SERVICE > /dev/null
      then
@@ -55,15 +46,15 @@
      fi
    fi
  }
-
+ 
  mc_stop() {
    if pgrep -u $USERNAME -f $SERVICE > /dev/null
    then
      echo "Stopping $SERVICE"
-     as_user "screen -p 0 -S minecraft -X eval 'stuff \"say SERVER SHUTTING DOWN IN 10 SECONDS. Saving map...\"\015'"
-     as_user "screen -p 0 -S minecraft -X eval 'stuff \"save-all\"\015'"
+     sudo -u $USERNAME screen -p 0 -S minecraft -X eval 'stuff "say SERVER SHUTTING DOWN IN 10 SECONDS. Saving map..."\015'
+     sudo -u $USERNAME screen -p 0 -S minecraft -X eval 'stuff "save-all"\015'
      sleep 10
-     as_user "screen -p 0 -S minecraft -X eval 'stuff \"stop\"\015'"
+     sudo -u $USERNAME screen -p 0 -S minecraft -X eval 'stuff "stop"\015'
      sleep 7
    else
      echo "$SERVICE was not running."
@@ -74,26 +65,27 @@
    else
      echo "$SERVICE is stopped."
    fi
- }
-
+ } 
+ 
  mc_backup() {
     NOW=`date "+%Y-%m-%d_%Hh%M"`
     BACKUP_FILE="$BACKUPPATH/${WORLD}_${NOW}.tar"
     echo "Backing up minecraft world..."
-    as_user "tar -C \"$MCPATH\" -cf \"$BACKUP_FILE\" $WORLD"
-
+    sudo -u $USERNAME tar -C \"$MCPATH\" -cf \"$BACKUP_FILE\" $WORLD
+ 
     echo "Compressing backup..."
-    as_user "gzip -f \"$BACKUP_FILE\""
+    sudo -u $USERNAME gzip -f \"$BACKUP_FILE\"
     echo "Done."
  }
 
+
  mc_list() {
-   if pgrep -u $USERNAME -f $SERVICE > /dev/null
-   then
-    as_user "screen -p 0 -S minecraft -X eval 'stuff \"list\"\015'"
-    sleep .1
-    echo `tail -n 2 $MCPATH/logs/latest.log`
-   fi
+    if pgrep -u $USERNAME -f $SERVICE > /dev/null
+    then
+	sudo -u $USERNAME screen -p 0 -S minecraft -X eval 'stuff "list"\015'
+	sleep .1
+	echo `tail -n 2 $MCPATH/logs/latest.log`
+    fi
  }
 
  mc_command() {
@@ -102,21 +94,26 @@
    then
      pre_log_len=`wc -l "$MCPATH/logs/latest.log" | awk '{print $1}'`
      echo "$SERVICE is running... executing command"
-     as_user "screen -p 0 -S minecraft -X eval 'stuff \"$command\"\015'"
+     sudo -u $USERNAME screen -p 0 -S minecraft -X eval 'stuff \"$command\"\015'
      sleep .1 # assumes that the command will run and print to the log file in less than .1 seconds
+     # print output
      tail -n $[`wc -l "$MCPATH/logs/latest.log" | awk '{print $1}'`-$pre_log_len] "$MCPATH/logs/latest.log"
    fi
  }
-
+ 
  #Start-Stop here
  case "$1" in
    start)
+     #verify_user
+     #su minecraft
      mc_start
      ;;
    stop)
+     #verify_user
      mc_stop
      ;;
    restart)
+     #verify_user
      mc_stop
      mc_start
      ;;
@@ -128,6 +125,14 @@
        mc_backup
      fi
      ;;
+   list)
+     if pgrep -u $USERNAME -f $SERVICE > /dev/null
+     then
+       mc_list
+     else
+       echo "$SERVICE is not running."
+     fi
+     ;;
    status)
      if pgrep -u $USERNAME -f $SERVICE > /dev/null
      then
@@ -136,15 +141,8 @@
        echo "$SERVICE is not running."
      fi
      ;;
-   list)
-     if pgrep -u $USERNAME -f $SERVICE > /dev/null
-      then
-        mc_list
-      else
-        echo "$SERVICE is not running."
-      fi
-     ;;
    command)
+     verify_user
      if [ $# -gt 1 ]; then
        shift
        mc_command "$*"
@@ -153,11 +151,11 @@
      fi
      ;;
    *)
-   echo "Usage: $0 {start|stop|backup|status|restart|list|command \"server command\"}"
+   echo "Usage: $0 {start|stop|update|backup|status|restart|command \"server command\"}"
    exit 1
    ;;
  esac
-
+ 
  exit 0
 </pre>
 <noinclude>[[Category:Data pages]]</noinclude>
