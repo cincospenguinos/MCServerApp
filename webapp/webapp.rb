@@ -8,8 +8,13 @@ require 'mc_emailer'
 class WebApp < Sinatra::Base
 
   helpers do
+    def startup_config
+      YAML.load_file('config/startup_script_config.yml')
+    end
+    
     def server_on?
-      return !`#{startup_config[:full_file_path]} #{startup_config[:status]}`.match(/not/) if File.exist?('/etc/init.d/minecraft')
+      cfg = startup_config
+      return !`#{cfg[:full_file_path]} #{cfg[:status]}`.match(/not/) if File.exist?('/etc/init.d/minecraft')
       false
     end
   end
@@ -36,6 +41,10 @@ class WebApp < Sinatra::Base
     erb :stats
   end
 
+  get '/test' do
+    `/etc/init.d/minecraft start`.to_s
+  end
+
 # Returns the status of the server
   get '/status' do
     {
@@ -47,18 +56,18 @@ class WebApp < Sinatra::Base
   post '/startup' do
     username = params['username']
     password = params['password']
-
     { :successful => false, message: 'Username and password may not be empty'}.to_json if username.empty? || password.empty?
 
     user = MinecraftUser.first(:username => username)
+    puts "User? #{user}"
+    puts "Who am I? #{`whoami`}"
 
     if user && user.startup?(password)
-      startup_config = YAML.load_file('config/startup_script_config.yml')
-      `#{startup_config[:full_file_path]} #{startup_config[:start]} &`
-      {
-        :successful => true,
-        :message => ''
-      }.to_json
+      Thread.new {
+        startup_config = YAML.load_file('config/startup_script_config.yml')
+        `#{startup_config[:full_file_path]} #{startup_config[:start]}`
+      }
+      return { :successful => true, :message => '' }.to_json
     end
 
     {
