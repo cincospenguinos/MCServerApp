@@ -19,7 +19,7 @@ class WebApp < Sinatra::Base
     end
   end
 
-  before %r((^\/$|map|stats)) do
+  before %r((^\/$|map|stats|rules)) do
     @js_files = []
     @css_files = []
     @server_on = server_on?
@@ -41,8 +41,8 @@ class WebApp < Sinatra::Base
     erb :stats
   end
 
-  get '/test' do
-    `/etc/init.d/minecraft start`.to_s
+  get '/rules' do
+    erb :rules
   end
 
 # Returns the status of the server
