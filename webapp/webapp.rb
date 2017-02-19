@@ -59,10 +59,9 @@ class WebApp < Sinatra::Base
     { :successful => false, message: 'Username and password may not be empty'}.to_json if username.empty? || password.empty?
 
     user = MinecraftUser.first(:username => username)
-    puts "User? #{user}"
-    puts "Who am I? #{`whoami`}"
-
-    if user && user.startup?(password)
+    startup = user.startup?(password)
+    if user && startup
+      puts "~~~~#{startup.date_received}"
       Thread.new {
         startup_config = YAML.load_file('config/startup_script_config.yml')
         `#{startup_config[:full_file_path]} #{startup_config[:start]}`

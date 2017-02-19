@@ -29,7 +29,7 @@ class MinecraftUser
   #  a StartupRequest if it is
   def startup?(provided_pass)
     if can_startup && provided_pass == password
-      request = StartupRequest.create!(:minecraft_user => self)
+      request = StartupRequest.create!(:minecraft_user => self, :date_received => DateTime.now)
       request
     else
       false
