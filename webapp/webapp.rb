@@ -34,7 +34,7 @@ class WebApp < Sinatra::Base
   end
 
   get '/map' do
-    erb :map
+    redirect 'http://andreminecraft.duckdns.org:8123'
   end
 
   get '/stats' do
